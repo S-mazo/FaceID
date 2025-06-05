@@ -99,6 +99,13 @@ def registrar_ingresos(persona):
             f.truncate()  # Limpiar el archivo
             for nombre, hora in nombres_registro.items():
                 f.write(f"{nombre}, {hora}\n")  # Escribir cada entrada
+                
+    except FileNotFoundError:
+        with open(Path(dir_ruta, "registro.csv"), "w", encoding="utf-8") as f:
+            f.writelines("Persona, Hora\n")
+            ahora = datetime.now().strftime("%H:%M:%S")
+            f.writelines(f"{persona}, {ahora}")
+            
     except Exception as e:
         print(f"Error al registrar ingresos: {e}")
             
@@ -134,8 +141,8 @@ else:
                 registrar_ingresos(n)
         except Exception as e:
             n = "Desconocido"
-            print(f"Error al procesar la imagenes: {e}")
-            print(f"Al parecer la ruta ({ruta})no está vacía. Por favor, verifica que en la ruta hayan imágenes (con el nombre de la persona como nombre de archivo) y que no haya imágenes duplicadas.")
+            print(f"Error al procesar las imágenes: {e}")
+            print(f"Quizás la ruta ({ruta}) está vacía. Por favor, verifica que en la ruta hayan imágenes (con el nombre de la persona como nombre de archivo) y que no haya imágenes duplicadas.")
             
         # Dibujar rectángulo alrededor de la cara detectada
         y1, x2, y2, x1 = caraubic
