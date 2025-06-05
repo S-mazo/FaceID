@@ -25,6 +25,8 @@ print("Foto capturada correctamente")
 
 # Crear base de datos
 ruta = Path(dir_ruta, "database")
+if not os.exists(ruta):
+    os.makedirs(ruta, exist_ok=True)
 mis_imagenes = []
 nombres_empleados = []
 lista_empleados = os.listdir(ruta)
@@ -133,8 +135,7 @@ else:
         except Exception as e:
             n = "Desconocido"
             print(f"Error al procesar la imagenes: {e}")
-            print(f"Al parecer la ruta ({ruta})no existía, así que se ha creado una nueva carpeta para guardar las imágenes a comparar.")
-            os.makedirs(ruta, exist_ok=True)
+            print(f"Al parecer la ruta ({ruta})no está vacía. Por favor, verifica que en la ruta hayan imágenes (con el nombre de la persona como nombre de archivo) y que no haya imágenes duplicadas.")
             
         # Dibujar rectángulo alrededor de la cara detectada
         y1, x2, y2, x1 = caraubic
