@@ -25,7 +25,7 @@ print("Foto capturada correctamente")
 
 # Crear base de datos
 ruta = Path(dir_ruta, "database")
-if not os.exists(ruta):
+if not os.path.exists(ruta):
     os.makedirs(ruta, exist_ok=True)
 mis_imagenes = []
 nombres_empleados = []
