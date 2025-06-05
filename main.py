@@ -119,17 +119,23 @@ else:
         print(distancias)
 
         # Mostrar coincidencias si las hay
-        indice_coincidencia = np.argmin(distancias)
-        if distancias[indice_coincidencia] > 0.6:
+        try:
+            indice_coincidencia = np.argmin(distancias)
+            if distancias[indice_coincidencia] > 0.6:
+                n = "Desconocido"
+                print("No coincide con nadie en la base de datos de rostro")
+            else:
+                n = nombres_empleados[indice_coincidencia]
+                print(f"Hola, bienvenido {n}")
+                # Mostrar la imagen de la persona reconocida (comentar línea de abajo para evitar mostrar la imagen)
+                # cv2.imshow(f"Foto de {n}", cv2.cvtColor(mis_imagenes[indice_coincidencia], cv2.COLOR_BGR2RGB))
+                registrar_ingresos(n)
+        except Exception as e:
             n = "Desconocido"
-            print("No coincide con nadie en la base de datos de rostro")
-        else:
-            n = nombres_empleados[indice_coincidencia]
-            print(f"Hola, bienvenido {n}")
-            # Mostrar la imagen de la persona reconocida (comentar línea de abajo para evitar mostrar la imagen)
-            # cv2.imshow(f"Foto de {n}", cv2.cvtColor(mis_imagenes[indice_coincidencia], cv2.COLOR_BGR2RGB))
-            registrar_ingresos(n)
-
+            print(f"Error al procesar la imagenes: {e}")
+            print(f"Al parecer la ruta ({ruta})no existía, así que se ha creado una nueva carpeta para guardar las imágenes a comparar.")
+            os.makedirs(ruta, exist_ok=True)
+            
         # Dibujar rectángulo alrededor de la cara detectada
         y1, x2, y2, x1 = caraubic
         imagen = cv2.cvtColor(imagen, cv2.COLOR_BGR2RGB)
